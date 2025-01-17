@@ -1,0 +1,32 @@
+<script setup>
+</script>
+
+<template>
+  <div class="header">
+    <v-img src="@/assets/rick-morty-wallpaper.png" height="328" cover></v-img>
+    <v-row class="search-bar">
+      <v-col cols="7">
+        <v-img src="@/assets/brand-logo.png" height="96"></v-img>
+        <v-text-field
+          label="Buscar personaje por nombre"
+          variant="solo-filled"
+          prepend-inner-icon="mdi-magnify"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+
+<style lang="scss">
+.search-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 328px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+</style>
