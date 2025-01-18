@@ -1,4 +1,23 @@
 <script setup>
+import { useCharactersStore } from '@/stores/characters';
+import { storeToRefs } from 'pinia';
+import { ref } from "vue";
+
+
+const { setSearchQuery, getCharacters } = useCharactersStore();
+const {query} = storeToRefs(useCharactersStore());
+
+
+const onChange = () => {
+  setSearchQuery(query.value);
+  getCharacters();
+};
+
+
+
+
+
+
 </script>
 
 <template>
@@ -8,6 +27,8 @@
       <v-col cols="7">
         <v-img src="@/assets/brand-logo.png" height="96"></v-img>
         <v-text-field
+          v-model="query"
+          @input="onChange"
           label="Buscar personaje por nombre"
           variant="solo-filled"
           prepend-inner-icon="mdi-magnify"
