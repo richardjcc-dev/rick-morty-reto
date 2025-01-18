@@ -5,13 +5,16 @@ export const useCharactersStore = defineStore("characters", {
   state: () => ({
     characters: [],
     page: 1,
-    totalPages: 0,
     filters: {
       name: '',
       species: "",
       gender: "",
       status: "",
     },
+    info: {
+      count: 0,
+      pages: 0
+    }
   }),
   actions: {
     async getCharacters() {
@@ -28,7 +31,7 @@ export const useCharactersStore = defineStore("characters", {
           { params }
         );
         this.characters = response.data.results;
-        this.totalPages = response.data.info.pages;
+        this.info = response.data.info
       } catch (error) {
         console.error(error);
       }

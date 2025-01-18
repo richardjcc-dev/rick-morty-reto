@@ -15,5 +15,8 @@ import { createVuetify } from 'vuetify'
 export default createVuetify({
   theme: {
     defaultTheme: 'light',
+    typography: {
+      fontFamily: 'Montserrat, sans-serif'
+    }
   },
 })

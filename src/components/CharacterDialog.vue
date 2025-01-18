@@ -46,7 +46,8 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch } from 'vue';
+
 
 const props = defineProps({
   character: {
@@ -61,14 +62,13 @@ const closeDialog = () => {
   dialog.value = false;
 };
 
-watch(
-  () => props.character,
-  (newVal) => {
-    if (newVal) {
-      dialog.value = true;
-    }
+watch(() => props.character, (newVal) => {
+  if (newVal) {
+    dialog.value = true;
   }
-);
+});
+
+
 </script>
 
 <style scoped>

@@ -1,16 +1,24 @@
 <template>
-  <div>
-    <v-btn icon @click="dialog = true">
-      <v-icon>mdi-filter-variant</v-icon>
+  <div class="container">
+    <v-btn elevation="0" icon @click="dialog = true">
+      <v-icon>mdi-tune</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" max-width="600">
-      <v-card>
-        <v-card-title class="headline">Filtros de Búsqueda</v-card-title>
+      <v-card class="py-5 px-1">
+        <v-card-title class="headline d-flex justify-lg-space-between">
+          Filtros avanzados
+          <v-btn color="black" variant="text" @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+
         <v-card-text>
           <v-form>
             <div>
               <h3>Especie</h3>
               <v-chip-group
+                class="mb-5"
+                variant="outlined"
                 v-model="filters.species"
                 active-class="primary--text"
               >
@@ -18,7 +26,6 @@
                   v-for="option in speciesOptions"
                   :key="option"
                   :value="option.code"
-                  outlined
                   clickable
                 >
                   {{ option.label }}
@@ -28,14 +35,15 @@
             <div>
               <h3>Género</h3>
               <v-chip-group
+                class="mb-5"
                 v-model="filters.gender"
                 active-class="primary--text"
+                variant="outlined"
               >
                 <v-chip
                   v-for="option in genderOptions"
                   :key="option"
                   :value="option.code"
-                  outlined
                   clickable
                 >
                   {{ option.label }}
@@ -47,6 +55,7 @@
               <v-chip-group
                 v-model="filters.status"
                 active-class="primary--text"
+                variant="outlined"
               >
                 <v-chip
                   v-for="option in statusOptions"
@@ -61,13 +70,12 @@
             </div>
           </v-form>
         </v-card-text>
+        <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="applyFilters"
+
+          <v-btn class="bg-green-darken-1 px-6 py-2" @click="applyFilters"
             >Aplicar</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Cerrar</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -104,6 +112,8 @@ const applyFilters = () => {
 };
 </script>
 
-<style scoped>
-/* Añade tus estilos aquí */
+<style lang="scss">
+.container {
+  font-family: "Montserrat", sans-serif;
+}
 </style>
