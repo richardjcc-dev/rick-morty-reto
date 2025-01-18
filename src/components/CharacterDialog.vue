@@ -1,53 +1,5 @@
-<template>
-  <v-dialog v-model="dialog" max-width="800">
-    <v-card>
-      <v-card-title>
-        <v-row>
-          <v-col cols="3">
-            <v-avatar size="150" class="ma-3" :src="character.image" />
-          </v-col>
-          <v-col cols="9">
-            <div>
-              <h2>{{ character.name }}</h2>
-              <h4>{{ character.species }}</h4>
-            </div>
-          </v-col>
-        </v-row>
-      </v-card-title>
-      <v-card-subtitle>
-        <v-row>
-          <v-col cols="3">
-            <h3>Información</h3>
-          </v-col>
-          <v-col cols="9">
-            <v-row>
-              <v-col cols="12">
-                <h4>Género</h4>
-                <p>{{ character.gender }}</p>
-              </v-col>
-              <v-col cols="12">
-                <h4>Origen</h4>
-                <p>{{ character.origin.name }}</p>
-              </v-col>
-              <v-col cols="12">
-                <h4>Estado</h4>
-                <p>{{ character.status }}</p>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-card-subtitle>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="closeDialog">Cerrar</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-</template>
-
 <script setup>
-import { ref, watch } from 'vue';
-
+const emit = defineEmits(["close-dialog"]);
 
 const props = defineProps({
   character: {
@@ -56,21 +8,90 @@ const props = defineProps({
   },
 });
 
-const dialog = ref(false);
-
 const closeDialog = () => {
-  dialog.value = false;
+  emit("close-dialog");
 };
-
-watch(() => props.character, (newVal) => {
-  if (newVal) {
-    dialog.value = true;
-  }
-});
-
-
 </script>
 
+<template>
+  <v-card class="bg-color">
+    <v-img
+      color="surface-variant"
+      height="128"
+      src="@/assets/bg.jpg"
+      cover
+    ></v-img>
+
+    <v-btn icon class="close-btn" size="large" @click="closeDialog">
+      <v-icon>mdi-close</v-icon>
+    </v-btn>
+
+    <v-card-title class="px-5 pb-6">
+      <v-row>
+        <v-col cols="12" sm="12" md="3">
+          <v-avatar size="128" class="avatar-img">
+            <v-img alt="John" :src="character.image"></v-img>
+          </v-avatar>
+        </v-col>
+        <v-col cols="12" sm="12" md="9">
+          <div>
+            <h2>{{ character.name }}</h2>
+            <v-card-subtitle class="pa-0">{{
+              character.species
+            }}</v-card-subtitle>
+          </div>
+        </v-col>
+
+        <v-col cols="12">
+          <v-card elevation="0" class="pa-3">
+            <h3 class="text-center">Información</h3>
+            <v-divider></v-divider>
+
+            <v-col class="container-text pr-3">
+              <v-card-subtitle class="px-0 py-0"
+                >Gender</v-card-subtitle
+              >
+              <p class="truncate-text">{{ character.gender }}</p>
+            </v-col>
+
+            <v-col class="container-text pr-3">
+              <v-card-subtitle class="px-0 py-0"
+                >Status</v-card-subtitle
+              >
+              <p class="truncate-text">{{ character.status }}</p>
+            </v-col>
+
+
+            <v-col class="container-text pr-3">
+              <v-card-subtitle class="px-0 py-0"
+                >Last known location</v-card-subtitle
+              >
+              <p class="truncate-text">{{ character.location.name }}</p>
+            </v-col>
+
+            <v-col class="container-text">
+              <v-card-subtitle class="px-0 py-0">First seen in</v-card-subtitle>
+              <p class="truncate-text">Never Ricking Morty</p>
+            </v-col>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-card-title>
+  </v-card>
+</template>
+
 <style scoped>
-/* Añade tus estilos aquí */
+
+.avatar-img {
+  margin-top: -100px;
+  border: 3px solid white;
+  z-index: 9;
+  position: absolute;
+}
+
+.close-btn {
+  position: absolute;
+  right: 3px;
+  top: 6px;
+}
 </style>

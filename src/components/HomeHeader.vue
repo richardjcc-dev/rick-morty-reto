@@ -6,7 +6,6 @@ const { getCharacters } = useCharactersStore();
 const { filters, page } = storeToRefs(useCharactersStore());
 
 const onChange = () => {
-  filters.value.name;
   page.value = 1;
   getCharacters();
 };
@@ -24,7 +23,7 @@ const onChange = () => {
           class="opacity-80 mt-7"
           bg-color="black"
           :hide-details="true"
-          v-model="filters.name"
+          v-model.trim="filters.name"
           @input="onChange"
           label="Buscar personaje por nombre"
           variant="solo-filled"

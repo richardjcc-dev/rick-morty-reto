@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const useCharactersStore = defineStore("characters", {
   state: () => ({
+    isLoading: false,
     characters: [],
     page: 1,
     filters: {
@@ -19,6 +20,7 @@ export const useCharactersStore = defineStore("characters", {
   actions: {
     async getCharacters() {
       try {
+        this.isLoading = true
         const params = {
           page: this.page,
           ...Object.fromEntries(
@@ -33,7 +35,13 @@ export const useCharactersStore = defineStore("characters", {
         this.characters = response.data.results;
         this.info = response.data.info
       } catch (error) {
-        console.error(error);
+        this.characters = []
+        this.info = {
+          count: 0,
+          pages: 0
+        }
+      } finally {
+        this.isLoading = false
       }
     },
   },

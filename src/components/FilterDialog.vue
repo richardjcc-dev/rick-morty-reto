@@ -1,3 +1,32 @@
+<script setup>
+import { ref } from "vue";
+
+const emit = defineEmits(["save-filters"]);
+
+const dialog = ref(false);
+const filters = ref({ species: "", gender: "", status: "" });
+
+const speciesOptions = [
+  { label: "Humano", code: "Human" },
+  { label: "Humanoide", code: "Humanoid" },
+  { label: "Alien", code: "Alien" },
+];
+const genderOptions = [
+  { label: "Masculino", code: "male" },
+  { label: "Femenino", code: "female" },
+  { label: "Desconocido", code: "unknown" },
+];
+const statusOptions = [
+  { label: "Vivo", code: "alive" },
+  { label: "Muerto", code: "dead" },
+];
+
+const applyFilters = () => {
+  emit("save-filters", filters.value);
+  dialog.value = false;
+};
+</script>
+
 <template>
   <div class="container">
     <v-btn elevation="0" icon @click="dialog = true">
@@ -82,35 +111,6 @@
     </v-dialog>
   </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
-
-const emit = defineEmits(["save-filters"]);
-
-const dialog = ref(false);
-const filters = ref({ species: "", gender: "", status: "" });
-
-const speciesOptions = [
-  { label: "Humano", code: "Human" },
-  { label: "Humanoide", code: "Humanoid" },
-  { label: "Alien", code: "Alien" },
-];
-const genderOptions = [
-  { label: "Masculino", code: "male" },
-  { label: "Femenino", code: "female" },
-  { label: "Desconocido", code: "unknown" },
-];
-const statusOptions = [
-  { label: "Vivo", code: "alive" },
-  { label: "Muerto", code: "dead" },
-];
-
-const applyFilters = () => {
-  emit("save-filters", filters.value);
-  dialog.value = false;
-};
-</script>
 
 <style lang="scss">
 .container {
