@@ -4,42 +4,34 @@ import axios from "axios";
 export const useCharactersStore = defineStore("characters", {
   state: () => ({
     characters: [],
-    query: "",
     page: 1,
     totalPages: 0,
-/*     filters: {
+    filters: {
+      name: '',
       species: "",
       gender: "",
       status: "",
-    }, */
+    },
   }),
   actions: {
     async getCharacters() {
       try {
+        const params = {
+          page: this.page,
+          ...Object.fromEntries(
+            Object.entries(this.filters).filter(([key, value]) => value !== "")
+          ),
+        };
+
         const response = await axios.get(
           `https://rickandmortyapi.com/api/character`,
-          {
-            params: {
-              page: this.page,
-              name: this.query,
-/*               species: this.filters.species,
-              gender: this.filters.gender,
-              status: this.filters.status, */
-            },
-          }
+          { params }
         );
         this.characters = response.data.results;
         this.totalPages = response.data.info.pages;
       } catch (error) {
         console.error(error);
       }
-    },
-    setSearchQuery(query) {
-      this.query = query;
-      this.page = 1;
-    },
-    setFilters(filters) {
-      this.filters = filters;
     },
   },
 });

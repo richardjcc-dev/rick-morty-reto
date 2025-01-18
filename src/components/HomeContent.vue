@@ -2,17 +2,23 @@
 import CharacterCard from "./CharacterCard.vue";
 import { useCharactersStore } from "@/stores/characters";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
 import FilterDialog from "./FilterDialog.vue";
 
-
-const { setSearchQuery, getCharacters} = useCharactersStore();
-const { characters, page, totalPages } = storeToRefs(useCharactersStore());
+const { getCharacters } = useCharactersStore();
+const { characters, page, totalPages, filters } = storeToRefs(
+  useCharactersStore()
+);
 
 const onPageChange = (newPage) => {
   page.value = newPage;
   getCharacters();
-  console.log('ola');
+};
+
+const onSaveFilters = (newFilters) => {
+  filters.value.gender = newFilters.gender;
+  filters.value.status = newFilters.status;
+  filters.value.species = newFilters.species;
+  getCharacters();
 };
 
 getCharacters();
@@ -23,7 +29,7 @@ getCharacters();
     <v-chip color="green" variant="flat" class="ml-5">Todos</v-chip>
     <v-chip class="mr-auto">Favoritos</v-chip>
     <!-- <v-icon icon="mdi-email mr-10"></v-icon> -->
-     <FilterDialog />
+    <FilterDialog @save-filters="onSaveFilters" />
   </div>
 
   <div class="container px-5 py-5">

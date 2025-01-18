@@ -13,16 +13,15 @@
               <v-chip-group
                 v-model="filters.species"
                 active-class="primary--text"
-                multiple
               >
                 <v-chip
                   v-for="option in speciesOptions"
                   :key="option"
-                  :value="option"
+                  :value="option.code"
                   outlined
                   clickable
                 >
-                  {{ option }}
+                  {{ option.label }}
                 </v-chip>
               </v-chip-group>
             </div>
@@ -31,16 +30,15 @@
               <v-chip-group
                 v-model="filters.gender"
                 active-class="primary--text"
-                multiple
               >
                 <v-chip
                   v-for="option in genderOptions"
                   :key="option"
-                  :value="option"
+                  :value="option.code"
                   outlined
                   clickable
                 >
-                  {{ option }}
+                  {{ option.label }}
                 </v-chip>
               </v-chip-group>
             </div>
@@ -49,16 +47,15 @@
               <v-chip-group
                 v-model="filters.status"
                 active-class="primary--text"
-                multiple
               >
                 <v-chip
                   v-for="option in statusOptions"
                   :key="option"
-                  :value="option"
+                  :value="option.code"
                   outlined
                   clickable
                 >
-                  {{ option }}
+                  {{ option.label }}
                 </v-chip>
               </v-chip-group>
             </div>
@@ -80,23 +77,29 @@
 
 <script setup>
 import { ref } from "vue";
-import { useCharactersStore } from "@/stores/characters";
 
-const store = useCharactersStore();
+const emit = defineEmits(["save-filters"]);
+
 const dialog = ref(false);
 const filters = ref({ species: "", gender: "", status: "" });
 
 const speciesOptions = [
-  "Humano",
-  "Cronenbergs",
-  "Meeseeks",
-  "Arañas Gigantes Telépatas",
+  { label: "Humano", code: "Human" },
+  { label: "Humanoide", code: "Humanoid" },
+  { label: "Alien", code: "Alien" },
 ];
-const genderOptions = ["Masculino", "Femenino", "Desconocido"];
-const statusOptions = ["Vivo", "Muerto"];
+const genderOptions = [
+  { label: "Masculino", code: "male" },
+  { label: "Femenino", code: "female" },
+  { label: "Desconocido", code: "unknown" },
+];
+const statusOptions = [
+  { label: "Vivo", code: "alive" },
+  { label: "Muerto", code: "dead" },
+];
+
 const applyFilters = () => {
-  store.setFilters(filters.value);
-  store.getCharacters();
+  emit("save-filters", filters.value);
   dialog.value = false;
 };
 </script>

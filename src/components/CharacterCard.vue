@@ -1,14 +1,27 @@
 <script setup>
+import { computed, ref } from "vue";
+import { useCharactersStore } from "@/stores/characters";
+import CharacterDialog from "./CharacterDialog.vue";
+
 defineProps({
   character: {
     type: Object,
     required: true,
   },
 });
+
+const store = useCharactersStore();
+// const characters = computed(() => store.characters);
+const selectedCharacter = ref(null);
+const openDialog = (character) => {
+  selectedCharacter.value = character;
+};
+
 </script>
 
 <template>
   <v-card
+    @click="openDialog(character)"
     elevation="0"
     class="card w-508 h-137 d-flex"
     max-width="508"
@@ -44,6 +57,7 @@ defineProps({
       </div>
     </div>
   </v-card>
+  
 </template>
 
 <style lang="scss">
@@ -56,5 +70,4 @@ defineProps({
   // background-color: #fafafa;
   color: black;
 }
-
 </style>
